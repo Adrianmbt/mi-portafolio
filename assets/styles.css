@@ -1,0 +1,192 @@
+/* --- Variables de Color para Neumorfismo --- */
+:root {
+    /* MODO CLARO */
+    --bg-color: #e0e5ec;
+    --card-bg: #e0e5ec;
+    --primary-color: #0d6efd;
+    --text-dark: #3b4d61;
+    --text-muted: #6c757d;
+    --neumorph-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+    --neumorph-shadow-inset: inset 6px 6px 10px 0 rgba(163, 177, 198, 0.6), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.5);
+}
+
+body.dark-mode {
+    /* MODO OSCURO */
+    --bg-color: #2c2f33;
+    --card-bg: #2c2f33;
+    --text-dark: #e8e8e8;
+    --text-muted: #a0a0a0;
+    --neumorph-shadow: 9px 9px 16px rgba(0, 0, 0, 0.4), -9px -9px 16px rgba(70, 75, 80, 0.5);
+    --neumorph-shadow-inset: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.4), inset -6px -6px 10px 0 rgba(70, 75, 80, 0.5);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.main-container {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+/* --- Estilo Neumórfico para TODAS las Tarjetas --- */
+.card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--neumorph-shadow);
+    border: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.personal-info-card {
+    position: sticky;
+    top: 75px;
+    text-align: center;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: -125px;
+    margin-bottom: 1rem;
+    padding: 8px;
+    background: var(--card-bg);
+    box-shadow: var(--neumorph-shadow);
+}
+
+/* --- Dark Mode Toggle --- */
+.dark-mode-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-muted);
+}
+.form-check-input {
+    cursor: pointer;
+}
+
+/* Colores de texto adaptables */
+h1, h2, h3, h4, h5, h6, .card-title { color: var(--text-dark); font-weight: 700; }
+p, .card-text { color: var(--text-dark); }
+.text-muted { color: var(--text-muted) !important; }
+hr { border-top: 1px solid var(--text-muted); opacity: 0.25; }
+
+/* --- Botones y Navegación --- */
+.btn-primary { background-color: var(--primary-color); border: none; border-radius: 10px; box-shadow: var(--neumorph-shadow); }
+.btn-primary:hover { box-shadow: var(--neumorph-shadow-inset); }
+.nav-pills .nav-link { border-radius: 50px; padding: 10px 25px; font-weight: 600; color: var(--text-muted); transition: all 0.3s ease; }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link { background-color: transparent; color: var(--primary-color) !important; box-shadow: var(--neumorph-shadow-inset); }
+.nav-pills .nav-link:not(.active):hover { color: var(--primary-color) !important; }
+
+/* --- Línea de Tiempo --- */
+.timeline { position: relative; padding-left: 25px; border-left: 3px solid rgba(0,0,0,0.1); }
+body.dark-mode .timeline { border-left: 3px solid rgba(255,255,255,0.1); }
+.timeline-item { position: relative; margin-bottom: 25px; }
+.timeline-dot { position: absolute; left: -39px; top: 15px; width: 15px; height: 15px; border-radius: 50%; background: var(--bg-color); border: 3px solid var(--primary-color); }
+.timeline-card-header { display: flex; align-items: center; gap: 15px; padding: 1rem; }
+.timeline-card-header img { border-radius: 8px; }
+
+/* --- Tarjetas de Portafolio --- */
+.project-card .card-img-top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 180px;
+    object-fit: cover;
+}
+.project-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* --- Resto de estilos --- */
+@media (max-width: 991.98px) {
+    .main-container { padding-top: 50px; }
+    .personal-info-card { position: static; margin-bottom: 30px; }
+    .profile-picture { margin-top: -75px; }
+}
+.carousel-control-prev, .carousel-control-next { display: none; }
+@media (min-width: 768px) {
+    .carousel-control-prev, .carousel-control-next { display: flex; width: 5%; }
+    .carousel-control-prev-icon, .carousel-control-next-icon { background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; padding: 1.2rem; }
+}
+@media (max-width: 767px) {
+    .carousel-inner .carousel-item > div { display: none; }
+    .carousel-inner .carousel-item > div:first-child { display: block; }
+}
+/* Efecto hover para las tarjetas */
+.hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los iconos de tecnologías */
+.project-tech {
+    margin-top: 10px;
+}
+
+.project-tech i {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #6c757d; /* Color gris oscuro */
+}
+
+/* Estilos para el logo de la universidad */
+.education-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.education-logo {
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+/* Estilos para los botones del carrusel */
+.carousel-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: #ff6600; /* Color naranja */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Estilos para los enlaces de contacto */
+.contact-info a {
+    color: var(--text-dark); /* Hereda el color del texto principal */
+    text-decoration: none;   /* Elimina el subrayado */
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: var(--primary-color); /* Cambia al color primario en hover */
+}
