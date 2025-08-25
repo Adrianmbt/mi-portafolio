@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Interactivo - Adrian Bello</title>
+
+    <!-- Enlaces CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- ESTILOS PERSONALIZADOS -->
+    <style>
+        /* --- Variables de Color para Neumorfismo --- */
+        :root {
+            /* MODO CLARO */
+            --bg-color: #e0e5ec;
+            --card-bg: #e0e5ec;
+            --primary-color: #0d6efd;
+            --text-dark: #3b4d61;
+            --text-muted: #6c757d;
+            --neumorph-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+            --neumorph-shadow-inset: inset 6px 6px 10px 0 rgba(163, 177, 198, 0.6), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        body.dark-mode {
+            /* MODO OSCURO */
+            --bg-color: #2c2f33;
+            --card-bg: #2c2f33;
+            --text-dark: #e8e8e8;
+            --text-muted: #a0a0a0;
+            --neumorph-shadow: 9px 9px 16px rgba(0, 0, 0, 0.4), -9px -9px 16px rgba(70, 75, 80, 0.5);
+            --neumorph-shadow-inset: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.4), inset -6px -6px 10px 0 rgba(70, 75, 80, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .main-container {
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        /* --- Estilo Neumórfico para TODAS las Tarjetas --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--neumorph-shadow);
+            border: none;
+        }
+
+        .personal-info-card {
+            position: sticky;
+            top: 75px;
+            text-align: center;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: -125px;
+            margin-bottom: 1rem;
+            padding: 8px;
+            background: var(--card-bg);
+            box-shadow: var(--neumorph-shadow);
+        }
+
+        /* --- Dark Mode Toggle --- */
+        .dark-mode-toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+        }
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        /* Colores de texto adaptables */
+        h1, h2, h3, h4, h5, h6, .card-title { color: var(--text-dark); font-weight: 700; }
+        p, .card-text { color: var(--text-dark); }
+        .text-muted { color: var(--text-muted) !important; }
+        hr { border-top: 1px solid var(--text-muted); opacity: 0.25; }
+
+        /* --- Botones y Navegación --- */
+        .btn-primary { background-color: var(--primary-color); border: none; border-radius: 10px; box-shadow: var(--neumorph-shadow); }
+        .btn-primary:hover { box-shadow: var(--neumorph-shadow-inset); }
+        .nav-pills .nav-link { border-radius: 50px; padding: 10px 25px; font-weight: 600; color: var(--text-muted); transition: all 0.3s ease; }
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link { background-color: transparent; color: var(--primary-color) !important; box-shadow: var(--neumorph-shadow-inset); }
+        .nav-pills .nav-link:not(.active):hover { color: var(--primary-color) !important; }
+
+        /* --- Línea de Tiempo --- */
+        .timeline { position: relative; padding-left: 25px; border-left: 3px solid rgba(0,0,0,0.1); }
+        body.dark-mode .timeline { border-left: 3px solid rgba(255,255,255,0.1); }
+        .timeline-item { position: relative; margin-bottom: 25px; }
+        .timeline-dot { position: absolute; left: -39px; top: 15px; width: 15px; height: 15px; border-radius: 50%; background: var(--bg-color); border: 3px solid var(--primary-color); }
+        .timeline-card-header { display: flex; align-items: center; gap: 15px; padding: 1rem; }
+        .timeline-card-header img { border-radius: 8px; }
+
+        /* --- Tarjetas de Portafolio --- */
+        .project-card .card-img-top {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            height: 180px;
+            object-fit: cover;
+        }
+        .project-card .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 991.98px) {
+            .main-container { padding-top: 50px; }
+            .personal-info-card { position: static; margin-bottom: 30px; }
+            .profile-picture { margin-top: -75px; }
+        }
+        @media (max-width: 767px) {
+            .carousel-inner .carousel-item > div { display: none; }
+            .carousel-inner .carousel-item > div:first-child { display: block; }
+        }
+
+        /* --- Estilos de Componentes Específicos --- */
+        .project-tech { margin-top: 10px; }
+        .project-tech i { font-size: 24px; margin-right: 10px; color: #6c757d; }
+        .education-header { display: flex; align-items: center; margin-bottom: 10px; }
+        .education-logo { margin-right: 15px; border-radius: 10%; }
+
+        /* --- NUEVOS ESTILOS PARA BOTONES DEL CARRUSEL --- */
+        #projectCarousel {
+            position: relative;
+            padding-bottom: 60px; /* Espacio para los controles inferiores */
+        }
+        .carousel-controls {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: static; /* Reset de posición de Bootstrap */
+            background: var(--card-bg);
+            border: none;
+            box-shadow: var(--neumorph-shadow);
+            border-radius: 15px;
+            width: 50px;
+            height: 50px;
+            opacity: 1;
+            transition: all 0.3s ease-in-out;
+            display: grid;
+            place-items: center;
+        }
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            box-shadow: var(--neumorph-shadow-inset);
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            display: none; /* Ocultamos los íconos por defecto de Bootstrap */
+        }
+        .carousel-control-prev::after,
+        .carousel-control-next::after {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        .carousel-control-prev::after {
+            content: "\f053"; /* Código de FontAwesome para flecha izquierda */
+        }
+        .carousel-control-next::after {
+            content: "\f054"; /* Código de FontAwesome para flecha derecha */
+        }
+        .carousel-control-prev:hover::after,
+        .carousel-control-next:hover::after {
+            color: var(--primary-color);
+        }
+        /* --- FIN DE NUEVOS ESTILOS --- */
+        
+        /* Estilos para los enlaces de contacto */
+        .contact-info a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container main-container">
+        <div class="row align-items-start">
+            <!-- Columna de Información Personal (Fija) -->
+            <div class="col-lg-4">
+                <div class="card p-4 personal-info-card">
+                    <img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/profile.jpg?raw=true" alt="Foto de Perfil de Adrian Bello" class="profile-picture mx-auto d-block">
+                    <div class="mt-3">
+                        <h3 class="card-title mb-1">Adrian Bello</h3>
+                        <p class="text-muted">Desarrollador Full-Stack</p>
+                    </div>
+                    <p class="card-text my-3 small">
+                        Líder técnico con 5+ años de experiencia. Especializado en diseño e implementación de sistemas usando PHP, Python y JavaScript. Apasionado por la tecnología y el aprendizaje continuo.
+                    </p>
+                    <div class="idiomas mb-3">
+                        <h5><strong>Idiomas</strong></h5>
+                        <p> Español (Nativo)</p>
+                        <p>Inglés (Intermedio)</p>
+                    </div>
+                    <a href="https://github.com/Adrianmbt/mi-portafolio/blob/main/uploads/Resumen%20curricular%20Adrian%20Bello.pdf?raw=true" class="btn btn-primary mb-3"><i class="fas fa-download me-2"></i> Descargar CV</a>
+                    <hr>
+                    <div class="contact-info">
+                        <h5 class="mb-3">Contacto</h5>
+                         <p><i class="fas fa-envelope me-2"></i> <a href="mailto:adrianmbet1@gmail.com">adrianmbet1@gmail.com</a></p>
+                        <p><i class="fab fa-whatsapp me-2"></i> <a href="https://wa.me/584129451597" target="_blank">+584129451597</a></p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Barcelona, Venezuela</p>
+                        
+                        <div class="dark-mode-toggle-container mt-4">
+                            <i class="fas fa-sun"></i>
+                            <div class="form-check form-switch mx-2">
+                                <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
+                            </div>
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="social-links mt-4">
+                            <a href="https://www.linkedin.com/in/adrian-bello-2b14a2199" class="social-icon" data-bs-toggle="tooltip" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/Adrianmbt" class="social-icon" data-bs-toggle="tooltip" title="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna con Pestañas Interactivas -->
+            <div class="col-lg-8">
+                <div class="card p-4 content-card">
+                    <!-- NAVEGACIÓN DE PESTAÑAS: Educación es ahora el activo -->
+                    <ul class="nav nav-pills mb-4 justify-content-center" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-educacion-tab" data-bs-toggle="pill" data-bs-target="#pills-educacion" type="button" role="tab" aria-controls="pills-educacion" aria-selected="true">Educación</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-experiencia-tab" data-bs-toggle="pill" data-bs-target="#pills-experiencia" type="button" role="tab" aria-controls="pills-experiencia" aria-selected="false">Experiencia</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-portafolio-tab" data-bs-toggle="pill" data-bs-target="#pills-portafolio" type="button" role="tab" aria-controls="pills-portafolio" aria-selected="false">Portafolio</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- Pestaña de Educación: Ahora se muestra por defecto -->
+                        <div class="tab-pane fade show active" id="pills-educacion" role="tabpanel" aria-labelledby="pills-educacion-tab">
+                             <h4 class="mb-4 text-center">Formación Académica</h4>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="card timeline-card hover-effect">
+                                        <div class="card-body">
+                                            <div class="education-header">
+                                                <img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/uptjaa.png?raw=true" alt="Logo UPTJAA" width="50" class="education-logo">
+                                                <h6><strong>Técnico Superior en Informática | UPTJAA</strong></h6>
+                                            </div>
+                                            <p class="text-muted mb-2 small">2019 - 2021</p>
+                                            <p><strong>Proyecto Destacado:</strong> Sistema de Atención al Ciudadano para la Gobernación, procesando más de 5,000 solicitudes mensuales.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="card timeline-card hover-effect">
+                                      <div class="card-body">
+                                        <div class="education-header">
+                                            <img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/uptjaa.png?raw=true" alt="Logo UPTJAA" width="50" class="education-logo">
+                                            <h6><strong>Ingeniería en Informática | UPTJAA</strong></h6>
+                                        </div>
+                                        <p class="text-muted mb-2 small">2023 - 2025 (Grado pendiente)</p>
+                                        <p><strong>Proyecto Destacado:</strong> Sistema de Gestión de Registros para la Gran Misión Vivienda, manejando más de 2,000 solicitudes al mes.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pestaña de Experiencia -->
+                        <div class="tab-pane fade" id="pills-experiencia" role="tabpanel" aria-labelledby="pills-experiencia-tab">
+                             <h4 class="mb-4 text-center">Experiencia Profesional</h4>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="card timeline-card hover-effect">
+                                        <div class="timeline-card-header">
+                                            <img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/sabat.jpg?raw=true" alt="Logo SABAT" width="50">
+                                            <div>
+                                                <h6><strong>Analista de Sistemas</strong></h6>
+                                                <p class="text-muted">SABAT | Ene 2020 – Dic 2020</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Desarrollo y mantenimiento del sistema de RRHH interno, logrando automatizar nóminas y reducir errores manuales en un 85%.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="card timeline-card hover-effect">
+                                         <div class="timeline-card-header">
+                                            <img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/cleanz.jpg?raw=true" alt="Logo CLEANZ" width="50">
+                                            <div>
+                                                <h6><strong>Programador de Sistemas</strong></h6>
+                                                <p class="text-muted">Consejo Legislativo | Ene 2021 – Ago 2022</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                           <p>Creación de un sistema de gestión de datos (RAAS) que mejoró la tasa de organización de registros en un 60%.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="card timeline-card hover-effect">
+                                         <div class="timeline-card-header">
+                                            <img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/sematrig.jpg?raw=true" alt="Logo SEMATRIG" width="60">
+                                            <div>
+                                                <h6><strong>Jefe de Sistemas y TI</strong></h6>
+                                                <p class="text-muted">SEMATRIG | Ago 2022 – Actualidad</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Lideré la implementación de sistemas de atención al ciudadano y pagos de impuestos, aumentando la velocidad de respuesta en un 40%.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pestaña de Portafolio: Ya no es la activa por defecto -->
+                        <div class="tab-pane fade" id="pills-portafolio" role="tabpanel" aria-labelledby="pills-portafolio-tab">
+                            <h4 class="mb-4 text-center">Mis Proyectos</h4>
+                            <div id="projectCarousel" class="carousel slide">
+                                <div class="carousel-inner">
+                                    
+                                    <!-- Slide 1 -->
+                                    <div class="carousel-item active">
+                                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                                            <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/ipasme.png?raw=true" class="card-img-top" alt="Sistema de Citas IPASME"><div class="card-body"><h5 class="card-title">Sistema de Citas IPASME</h5><p class="card-text small">Gestión completa de citas, pacientes, doctores y usuarios con historial médico.</p><div class="project-tech"><i class="devicon-php-plain"></i><i class="devicon-javascript-plain"></i><i class="devicon-mysql-plain"></i></div></div></div></div>
+                                            <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/alcaldia.png?raw=true" class="card-img-top" alt="Atención al Ciudadano"><div class="card-body"><h5 class="card-title">Atención al Ciudadano</h5><p class="card-text small">Monitoreo de solicitudes, gestión de ayudas sociales y dashboard interactivo.</p><div class="project-tech"><i class="devicon-python-plain"></i><i class="devicon-django-plain"></i><i class="devicon-javascript-plain"></i></div></div></div></div>
+                                            <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/sigraed.png?raw=true" class="card-img-top" alt="Gestión de Riesgos"><div class="card-body"><h5 class="card-title">Gestión de Riesgos (SIGRAED)</h5><p class="card-text small">Administración de contribuyentes, inspecciones, citaciones y monitoreo de solicitudes.</p><div class="project-tech"><i class="devicon-php-plain"></i><i class="devicon-laravel-plain"></i><i class="devicon-vuejs-plain"></i></div></div></div></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Slide 2 -->
+                                    <div class="carousel-item">
+                                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                                            <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/boom.png?raw=true" class="card-img-top" alt="Sistema de Asistencia"><div class="card-body"><h5 class="card-title">Sistema de Asistencia</h5><p class="card-text small">Control de asistencia diaria y gestión de personal para uso interno de eventos.</p><div class="project-tech"><i class="devicon-python-plain"></i><i class="devicon-flask-plain"></i><i class="devicon-bootstrap-plain"></i></div></div></div></div>
+                                            <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/infiny.png?raw=true" class="card-img-top" alt="Infinity Gym"><div class="card-body"><h5 class="card-title">Infinity Gym Center</h5><p class="card-text small">Sistema de ventas, stock, inventario de equipos y gestión de membresías.</p><div class="project-tech"><i class="devicon-php-plain"></i><i class="devicon-javascript-plain"></i><i class="devicon-bootstrap-plain"></i></div></div></div></div>
+                                            <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/aula.png?raw=true" class="card-img-top" alt="Aula Interactiva PDVSA"><div class="card-body"><h5 class="card-title">Aula Interactiva PDVSA</h5><p class="card-text small">Plataforma educativa con inscripción a cursos, evaluaciones y emisión de certificados.</p><div class="project-tech"><i class="devicon-php-plain"></i><i class="devicon-moodle-plain"></i><i class="devicon-javascript-plain"></i></div></div></div></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Slide 3 -->
+                                    <div class="carousel-item">
+                                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                                          <div class="col"><div class="card h-100 project-card hover-effect"><img src="https://github.com/Adrianmbt/mi-portafolio/blob/main/images/tienda.png?raw=true" class="card-img-top" alt="SublimeZone"><div class="card-body"><h5 class="card-title">SublimeZone Tienda Online</h5><p class="card-text small">E-commerce con sistema de login, gestión de ventas y control de stock de productos.</p><div class="project-tech"><i class="devicon-php-plain"></i><i class="devicon-wordpress-plain"></i><i class="devicon-woocommerce-plain"></i></div></div></div></div> 
+                                        </div>
+                                    </div>
+                                </div>   
+                                    
+                                <!-- CONTROLES DEL CARRUSEL REDISEÑADOS -->
+                                <div class="carousel-controls">
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev" aria-label="Proyecto anterior"></button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next" aria-label="Siguiente proyecto"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // 1. INICIALIZAR TOOLTIPS DE BOOTSTRAP
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // 2. LÓGICA PARA EL MODO OSCURO
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const applyTheme = (theme) => {
+        body.classList.toggle('dark-mode', theme === 'dark');
+        if(darkModeToggle) darkModeToggle.checked = (theme === 'dark');
+    };
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+    darkModeToggle.addEventListener('change', () => {
+        const theme = darkModeToggle.checked ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        applyTheme(theme);
+    });
+
+    // --- ANIMACIONES CON ANIME.JS ---
+
+    // Animación inicial al cargar la página
+    anime.timeline({
+        easing: 'easeOutExpo',
+        duration: 1000
+    }).add({
+        targets: '.personal-info-card',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+        delay: 200
+    }).add({
+        targets: '.content-card',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+    }, '-=800');
+
+    // Función para animar el contenido de una pestaña activa
+    const animateTabContent = (tabPaneId) => {
+        const targetPane = document.querySelector(tabPaneId);
+        if (!targetPane) return;
+
+        const elementsToAnimate = targetPane.querySelectorAll('.timeline-item, .project-card');
+        if (elementsToAnimate.length > 0) {
+             anime({
+                targets: elementsToAnimate,
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100, { start: 200 }),
+                easing: 'easeOutCubic'
+            });
+        }
+    };
+    
+    // Animar la primera pestaña activa al cargar
+    const initialActiveTab = document.querySelector('.nav-pills .nav-link.active');
+    if (initialActiveTab) {
+        animateTabContent(initialActiveTab.dataset.bsTarget);
+    }
+    
+    // Listener para animar al cambiar de pestaña
+    const tabs = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabs.forEach(tab => {
+        tab.addEventListener('shown.bs.tab', event => {
+            const targetPaneId = event.target.dataset.bsTarget;
+            animateTabContent(targetPaneId);
+        });
+    });
+
+    // Animación de hover para iconos sociales
+    document.querySelectorAll('.social-icon').forEach(icon => {
+        icon.addEventListener('mouseenter', () => anime({ targets: icon, scale: 1.25, rotate: '1turn', duration: 800 }));
+        icon.addEventListener('mouseleave', () => anime({ targets: icon, scale: 1, rotate: '0turn', duration: 600 }));
+    });
+
+    // --- ANIMACIÓN DE HOVER UNIFICADA PARA TARJETAS ---
+    document.querySelectorAll('.hover-effect').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            anime({
+                targets: card,
+                translateY: 2, // Mueve la tarjeta 2px hacia abajo
+                boxShadow: 'var(--neumorph-shadow-inset)', // Aplica la sombra de "presionado"
+                duration: 200,
+                easing: 'easeOutCubic'
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            anime({
+                targets: card,
+                translateY: 0, // Devuelve la tarjeta a su posición original
+                boxShadow: 'var(--neumorph-shadow)', // Devuelve la sombra original
+                duration: 400,
+                easing: 'easeOutElastic(1, .8)'
+            });
+        });
+    });
+
+});
+    </script>
+</body>
+</html>
