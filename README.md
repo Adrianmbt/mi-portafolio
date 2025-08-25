@@ -15,8 +15,8 @@ Un portafolio web personal con un diseño neumórfico, modo claro/oscuro y anima
 
 ## 🚀 Demo en Vivo
 
-Puedes ver el proyecto en acción aquí: **[https://adrianmbt.github.io/mi-portafolio/](https://adrianmbt.github.io/mi-portafolio/)** 
-> (Recuerda reemplazar este enlace con la URL de tu GitHub Pages una vez desplegado)
+Puedes ver el proyecto en acción aquí: https://adrianmbt.github.io/mi-portafolio/
+
 
 ---
 
