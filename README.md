@@ -8,8 +8,8 @@
 
 Un portafolio web personal con un diseño neumórfico, modo claro/oscuro y animaciones interactivas para mostrar mis proyectos, experiencia y habilidades como Desarrollador Full-Stack.
 
-![Screenshot del Portafolio](https://i.imgur.com/K1L8L3i.png)
-> **Nota:** Reemplaza la URL de la imagen de arriba con una captura de pantalla de tu propio portafolio.
+[https://github.com/Adrianmbt/mi-portafolio/blob/main/images/ptflio.png](https://github.com/Adrianmbt/mi-portafolio/blob/main/images/ptflio.png)
+
 
 ---
 
